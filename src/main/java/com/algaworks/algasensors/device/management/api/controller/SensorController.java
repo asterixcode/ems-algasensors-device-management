@@ -70,6 +70,19 @@ public class SensorController {
     return SensorOutput.from(sensorRepository.saveAndFlush(sensor));
   }
 
+  @PutMapping("/{sensor-id}/enable")
+  @ResponseStatus(HttpStatus.OK)
+  public SensorOutput enableSensor(@PathVariable("sensor-id") TSID sensorId) {
+    Sensor sensor =
+        sensorRepository
+            .findById(new SensorId(sensorId))
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    sensor.setEnabled(true);
+
+    return SensorOutput.from(sensorRepository.saveAndFlush(sensor));
+  }
+
   @DeleteMapping("/{sensor-id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteSensor(@PathVariable("sensor-id") TSID sensorId) {
@@ -79,5 +92,18 @@ public class SensorController {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     sensorRepository.delete(sensor);
+  }
+
+  @DeleteMapping("/{sensor-id}/enable")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public SensorOutput disableSensor(@PathVariable("sensor-id") TSID sensorId) {
+    Sensor sensor =
+        sensorRepository
+            .findById(new SensorId(sensorId))
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    sensor.setEnabled(false);
+
+    return SensorOutput.from(sensorRepository.saveAndFlush(sensor));
   }
 }
