@@ -4,10 +4,16 @@ import com.algaworks.algasensors.device.management.api.client.RestClientFactory;
 import com.algaworks.algasensors.device.management.api.client.SensorMonitoringClient;
 import com.algaworks.algasensors.device.management.api.model.SensorMonitoringOutput;
 import io.hypersistence.tsid.TSID;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-@Component
+/*
+This class is not used anymore, but it is kept here for reference.
+It has been replaced by @HttpExchange,
+@GetExchange, @PutExchange, and @DeleteExchange annotations in the SensorMonitoringClient interface,
+which automatically generate the necessary REST client methods.
+The RestClientConfig creates the RestClient bean, which is used by the SensorMonitoringClient interface.
+ */
+// @Component
 public class SensorMonitoringClientImpl implements SensorMonitoringClient {
 
   private final RestClient restClient;
